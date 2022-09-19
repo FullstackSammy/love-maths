@@ -1,4 +1,4 @@
-// wait for the DOM to finish loading before running the game
+// Wait for the DOM to finish loading before running the game
 // Get the button elements and add event listeners to them
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -31,10 +31,12 @@ function runGame(gameType) {
     let num2 = Math.floor(Math.random() * 25) + 1;
 
     if (gameType === "addition") {
-        displayAdditionQuestion(num1, num2)
+        displayAdditionQuestion(num1, num2);
+    } else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
     } else {
-        alert(`Unkwown game type: ${gameType}`);
-        throw `Unkwown game type: ${gameType}. Aborting!`;
+        alert(`Unknown game type: ${gameType}`);
+        throw `Unknown game type: ${gameType}. Aborting!`;
     }
 }
 
@@ -47,7 +49,7 @@ function checkAnswer() {
     let userAnswer = parseInt(document.getElementById("answer-box").value);
     let calculatedAnswer = calculateCorrectAnswer();
     let isCorrect = userAnswer === calculatedAnswer[0];
-    
+
     if (isCorrect) {
         alert("Hey! You got it right! :D");
         incrementScore();
@@ -56,7 +58,7 @@ function checkAnswer() {
         incrementWrongAnswer();
     }
 
-    runGame(calculatedAnswer[1])
+    runGame(calculatedAnswer[1]);
 }
 
 /**
@@ -71,6 +73,8 @@ function calculateCorrectAnswer() {
 
     if (operator === "+") {
         return [operand1 + operand2, "addition"];
+    } else if (operator === "x") {
+        return [operand1 * operand2, "multiply"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
@@ -79,7 +83,7 @@ function calculateCorrectAnswer() {
 }
 
 /**
- * Gets the current score from the DOM and increment it by 1
+ * Gets the current score from the DOM and increments it by 1
  */
 function incrementScore() {
     let oldScore = parseInt(document.getElementById("score").innerText);
@@ -87,24 +91,31 @@ function incrementScore() {
 }
 
 /**
- * Gets the tally of incorrect answers from the DOM and increment it by 1
+ * Gets the current tally of incorrect answers from the DOM and increments it by 1
  */
 function incrementWrongAnswer() {
+
     let oldScore = parseInt(document.getElementById("incorrect").innerText);
     document.getElementById("incorrect").innerText = ++oldScore;
+
 }
 
 function displayAdditionQuestion(operand1, operand2) {
+
     document.getElementById("operand1").textContent = operand1;
     document.getElementById("operand2").textContent = operand2;
     document.getElementById("operator").textContent = "+";
-    
+
 }
 
 function displaySubtractQuestion() {
 
 }
 
-function displayMultiplyQuestion() {
+function displayMultiplyQuestion(operand1, operand2) {
+
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
 
 }
